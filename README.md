@@ -6,7 +6,7 @@ loge
 _Overview_
 
 Just want simple terminal logging macros? Feel like [slog](https://docs.rs/slog) is overkill for your project and
-don't feel good about the runtime costs of [log](https://docs.rs/log)?
+don't feel good about the runtime costs of [log](https://docs.rs/log)? loge might be the doge for you.
 
 _Features_
 
@@ -16,7 +16,10 @@ _Features_
 _Usage_
 
 ```rust
-debug!("about to do the thing...");	// only printed if enable the loge-debug feature
+#[macro_use] extern crate loge;
+
+debug!("about to do the thing..."); // only printed if you enable the loge-debug feature
+
 if let Ok(done) = do_the_thing() {
 	info!("thing done:  {:?}", done); // printed unless you enable the loge-no-info feature
 }
