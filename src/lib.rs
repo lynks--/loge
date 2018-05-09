@@ -3,13 +3,13 @@
 macro_rules! loge {
 	($lvl: expr, $fmt: expr)				=> (
 		println!(concat!(
-			env!("CARGO_PKG_NAME"), " ", $lvl, " ({}) > ", $fmt
-		), module_path!())
+			env!("CARGO_PKG_NAME"), " ", $lvl, " ({}) > {}"
+		), $fmt, module_path!())
 	);
-	($lvl: expr, $fmt: expr, $($args:tt)*)	=> (
+	($lvl: expr, $fmt: expr, $($args:tt)+)	=> (
 		println!(concat!(
 			env!("CARGO_PKG_NAME"), " ", $lvl, " ({}) > ", $fmt
-		), module_path!(), $($args)*)
+		), module_path!(), $($args)+)
 	);
 }
 
@@ -18,7 +18,7 @@ macro_rules! loge {
 #[macro_export]
 macro_rules! debug {
 	($fmt: expr)					=> (loge!("dbug", $fmt));
-	($fmt: expr, $($args:tt)*)		=> (loge!("dbug", $fmt, $($args)*));
+	($fmt: expr, $($args:tt)+)		=> (loge!("dbug", $fmt, $($args)+));
 }
 #[cfg(not(feature = "loge-debug"))]
 #[macro_export]
@@ -31,7 +31,7 @@ macro_rules! debug {
 #[cfg(not(feature = "no-loge-info"))]
 macro_rules! info {
 	($fmt: expr)					=> (loge!("info", $fmt));
-	($fmt: expr, $($args:tt)*)		=> (loge!("info", $fmt, $($args)*));
+	($fmt: expr, $($args:tt)+)		=> (loge!("info", $fmt, $($args)+));
 }
 
 #[macro_export]
@@ -44,7 +44,7 @@ macro_rules! info {
 #[macro_export]
 macro_rules! warn {
 	($fmt: expr)					=> (loge!("WARN", $fmt));
-	($fmt: expr, $($args:tt)*)		=> (loge!("WARN", $fmt, $($args)*));
+	($fmt: expr, $($args:tt)+)		=> (loge!("WARN", $fmt, $($args)+));
 }
 
 // --- tests ----------------------------------------------------------------------------
@@ -56,6 +56,11 @@ mod tests {
 
 		let s = String::from("so doge");
 		info!("the string {:?} is {} characters long", s, s.len());
+
+		info!(String::from("print a string"));
+
+		let s2 = String::from("another string");
+		info!(s2);
 
 		warn!("much warning");
     }

@@ -6,7 +6,7 @@ loge
 _Overview_
 
 Just want simple terminal logging macros? Feel like [slog](https://docs.rs/slog) is overkill for your project and
-don't feel good about the runtime costs of [log](https://docs.rs/log)? loge might be the doge for you.
+don't feel good about the marginal runtime costs of [log](https://docs.rs/log)? loge might be the doge for you.
 
 _Features_
 
