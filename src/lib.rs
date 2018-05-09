@@ -4,7 +4,7 @@ macro_rules! loge {
 	($lvl: expr, $fmt: expr)				=> (
 		println!(concat!(
 			env!("CARGO_PKG_NAME"), " ", $lvl, " ({}) > {}"
-		), $fmt, module_path!())
+		), module_path!(), $fmt)
 	);
 	($lvl: expr, $fmt: expr, $($args:tt)+)	=> (
 		println!(concat!(
