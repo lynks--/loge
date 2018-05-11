@@ -2,14 +2,10 @@
 #[macro_export]
 macro_rules! loge {
 	($lvl: expr, $fmt: expr)				=> (
-		println!(concat!(
-			env!("CARGO_PKG_NAME"), " ", $lvl, " ({}) > {}"
-		), module_path!(), $fmt)
+		println!(concat!($lvl, " [{:30}] > {}"), module_path!(), $fmt)
 	);
 	($lvl: expr, $fmt: expr, $($args:tt)+)	=> (
-		println!(concat!(
-			env!("CARGO_PKG_NAME"), " ", $lvl, " ({}) > ", $fmt
-		), module_path!(), $($args)+)
+		println!(concat!($lvl, " [{:30}] > ", $fmt), module_path!(), $($args)+)
 	);
 }
 
