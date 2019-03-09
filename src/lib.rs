@@ -1,12 +1,19 @@
+		
 // --- core loge macro, dont call this directly -----------------------------------------
 #[macro_export]
 macro_rules! loge {
-	($lvl: expr, $fmt: expr)				=> (
-		println!(concat!($lvl, " [{:30}] > {}"), module_path!(), $fmt)
-	);
-	($lvl: expr, $fmt: expr, $($args:tt)+)	=> (
-		println!(concat!($lvl, " [{:30}] > ", $fmt), module_path!(), $($args)+)
-	);
+	($lvl: expr, $fmt: expr)				=> ({
+		let t = ::std::time::SystemTime::now().duration_since(::std::time::UNIX_EPOCH).unwrap();
+		let secs = t.as_secs() % 10000;
+		let millis = t.subsec_nanos() / 1_000_000;
+		println!(concat!($lvl, " {:04}.{:03} [{:32}] > {}"), secs, millis, module_path!(), $fmt);
+	});
+	($lvl: expr, $fmt: expr, $($args:tt)+)	=> ({
+		let t = ::std::time::SystemTime::now().duration_since(::std::time::UNIX_EPOCH).unwrap();
+		let secs = t.as_secs() % 10000;
+		let millis = t.subsec_nanos() / 1_000_000;
+		println!(concat!($lvl, " {:04}.{:03} [{:32}] > ", $fmt), secs, millis, module_path!(), $($args)+);
+	});
 }
 
 // --- debug output (opt in with cfg loge_debug) ----------------------------------------
